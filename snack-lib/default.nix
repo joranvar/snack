@@ -163,7 +163,7 @@ in
     buildAsLibrary
     snackEnv
     snackSpec
-    hpackSpec
+    hpackSpecs
     mkPackage
     ;
   }
