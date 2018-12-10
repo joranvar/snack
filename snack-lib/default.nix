@@ -67,6 +67,8 @@ let
         exe_path = "${drv.out}/${drv.relExePath}";
       };
 
+  snackEnv = pkgSpec: ghciWithMain ghcWith (executableMainModSpec pkgSpec);
+
   inferSnackBuild = packageNix: mkPackage (import packageNix);
 
   inferSnackGhci = packageNix: writeText "snack-ghci-json"
@@ -159,6 +161,7 @@ in
     packageYaml
     buildAsExecutable
     buildAsLibrary
+    snackEnv
     snackSpec
     hpackSpec
     mkPackage
