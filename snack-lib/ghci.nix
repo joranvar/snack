@@ -60,6 +60,6 @@ rec {
           done
           fi
         done
-        ${newGhc}/bin/ghci
+        ${newGhc}/bin/ghci $*
         '';
 }
