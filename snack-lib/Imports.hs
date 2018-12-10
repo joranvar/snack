@@ -5,7 +5,6 @@ module Main (main) where
 
 import Control.Monad.IO.Class
 import Data.List (stripPrefix)
-import Data.Semigroup
 import System.Environment
 import Control.Exception
 import qualified DriverPipeline
@@ -68,7 +67,7 @@ main = do
 
         runParser fp2 str Parser.parseModule >>= \case
           Lexer.POk _ (SrcLoc.L _ res) -> pure res
-          Lexer.PFailed spn e -> liftIO $ do
+          Lexer.PFailed _ spn e -> liftIO $ do
             Handle.hPutStrLn stderr $ unlines
               [ "Could not parse module: "
               , fp2
