@@ -37,6 +37,7 @@ in
         topExtensions = optAttr package "default-extensions" [];
         topExtraSourceFiles = optAttr package "extra-source-files" [];
         topExtraSourceDirs = optAttr package "extra-source-dirs" [];
+        topGhcOpts = optAttr package "ghc-options" [];
         packageLib = withAttr package "library" null (component:
             { src =
                 if builtins.isList component.source-dirs
@@ -49,6 +50,7 @@ in
               extensions = topExtensions ++ (optAttr component "extensions" []);
               extra-files = map (f: builtins.toPath "${builtins.toString base}/${f}") topExtraSourceFiles;
               extra-directories = map (f: builtins.toPath "${builtins.toString base}/${f}") topExtraSourceDirs;
+              ghcOpts = topGhcOpts ++ (optAttr component "ghc-options" []);
             }
           );
 
@@ -74,6 +76,7 @@ in
               extensions = topExtensions ++ (optAttr component "extensions" []);
               extra-files = map (f: builtins.toPath "${builtins.toString base}/${f}") topExtraSourceFiles;
               extra-directories = map (f: builtins.toPath "${builtins.toString base}/${f}") topExtraSourceDirs;
+              ghcOpts = topGhcOpts ++ (optAttr component "ghc-options" []);
             packages = map (_: packageLib) depOrPack.right;
             };
     in
