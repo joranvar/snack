@@ -67,6 +67,19 @@ rec {
       }
       modSpecs;
 
+  buildModulesRec' = ghcWith: empty: modSpecs:
+    foldDAG
+      { f = mod:
+          { "${mod.moduleName}" =
+            "${buildModule ghcWith mod}";
+          };
+        elemLabel = mod: mod.moduleName;
+        elemChildren = mod: mod.moduleImports;
+        reduce = a: b: a // b;
+        empty = empty;
+      }
+      modSpecs;
+
   buildModule = ghcWith: modSpec:
     let
       ghc = ghcWith deps;

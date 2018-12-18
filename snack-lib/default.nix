@@ -60,6 +60,9 @@ let
   buildAsLibrary = pkgSpec:
     buildLibrary ghcWith (libraryModSpecs pkgSpec);
 
+  buildAsModules = pkgSpec:
+    buildModulesRec' ghcWith {} (libraryModSpecs pkgSpec);
+
   buildAsExecutable = pkgSpec:
     let drv = linkMainModule ghcWith (executableMainModSpec pkgSpec);
     in
@@ -161,6 +164,7 @@ in
     packageYaml
     buildAsExecutable
     buildAsLibrary
+    buildAsModules
     snackEnv
     snackSpec
     hpackSpecs
